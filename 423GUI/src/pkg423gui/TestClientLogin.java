@@ -124,7 +124,7 @@ public class TestClientLogin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         close();
-        TestClientRegister t = new TestClientRegister();
+        TestClientReg t = new TestClientReg();
         t.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
