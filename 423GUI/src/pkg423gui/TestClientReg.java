@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 package pkg423gui;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import com.github.sarxos.webcam.Webcam;
 
 /**
  *
@@ -65,6 +72,11 @@ public class TestClientReg extends javax.swing.JFrame {
         jLabel5.setText("Take Picture");
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg423gui/FotoFlexer_Photo.jpg"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jRadioButton1.setText("M");
 
@@ -151,6 +163,13 @@ public class TestClientReg extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        Webcam webcam = Webcam.getDefault();
+        webcam.open();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     /**
