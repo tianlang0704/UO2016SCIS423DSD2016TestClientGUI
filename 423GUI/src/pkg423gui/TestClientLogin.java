@@ -52,6 +52,11 @@ public class TestClientLogin extends javax.swing.JFrame {
         jLabel2.setText("password");
 
         jButton1.setText("Login");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Sign up");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +132,14 @@ public class TestClientLogin extends javax.swing.JFrame {
         TestClientReg t = new TestClientReg();
         t.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        String email = jTextField1.getText();
+        System.out.println(email);
+        String password = jPasswordField1.getText();
+        System.out.println(password);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
