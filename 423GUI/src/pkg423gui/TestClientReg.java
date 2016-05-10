@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
