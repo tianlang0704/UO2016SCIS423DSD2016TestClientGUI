@@ -12,8 +12,11 @@ import javax.imageio.ImageIO;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.*;
+import java.awt.Image;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 
 /**
@@ -29,7 +32,8 @@ public class TestClientReg extends javax.swing.JFrame {
         initComponents();
     }
     
-
+    ArrayList<Image> pictures = new ArrayList<Image>();
+    int count = 0;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,16 +186,42 @@ public class TestClientReg extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
+        
+        count += 1;
+        
+        Webcam webcam = Webcam.getDefault();
+	webcam.setViewSize(WebcamResolution.VGA.getSize());
+        
+        
+        webcam.open();
+        
+        BufferedImage image = webcam.getImage();
+        
+        try {
+            ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        webcam.close();
+        
+        /*
         Webcam webcam = Webcam.getDefault();
         webcam.open();
         
         BufferedImage image = webcam.getImage();
+        
+        pictures.add(image);
+        System.out.println(pictures);
         
         try {
             ImageIO.write(image, "PNG", new File("test.png"));
         } catch (IOException ex) {
             Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
+        
+        
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
