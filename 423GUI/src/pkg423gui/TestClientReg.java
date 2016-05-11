@@ -28,6 +28,7 @@ public class TestClientReg extends javax.swing.JFrame {
     public TestClientReg() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
