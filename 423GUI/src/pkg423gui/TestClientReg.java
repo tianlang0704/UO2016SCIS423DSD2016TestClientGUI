@@ -4,27 +4,43 @@
  * and open the template in the editor.
  */
 package pkg423gui;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.*;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+
 
 
 /**
  *
  * @author Emmalie
  */
-public class TestClientReg extends javax.swing.JFrame {
+public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
+    ArrayList<Image> pictures = new ArrayList<Image>();
+    int count = 0;
+    static Webcam webcam = Webcam.getDefault();
+    static JPanel panel = new javax.swing.JPanel();
+    static JButton cap = new javax.swing.JButton();
+    
     /**
      * Creates new form TestClientReg
      */
@@ -32,8 +48,6 @@ public class TestClientReg extends javax.swing.JFrame {
         initComponents();
     }
     
-    ArrayList<Image> pictures = new ArrayList<Image>();
-    int count = 0;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -187,13 +201,37 @@ public class TestClientReg extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         
-        count += 1;
-        
-        Webcam webcam = Webcam.getDefault();
-	webcam.setViewSize(WebcamResolution.VGA.getSize());
-        
-        
+        webcam.setViewSize(WebcamResolution.VGA.getSize());
+      
         webcam.open();
+        
+        WebcamPanel wpanel = new WebcamPanel(webcam);
+        wpanel.setFPSDisplayed(true);
+	wpanel.setDisplayDebugInfo(true);
+	wpanel.setImageSizeDisplayed(true);
+        
+	panel.add(wpanel);
+	panel.setVisible(true);
+        panel.revalidate();
+        panel.repaint();
+        
+        JFrame window = new JFrame("Test webcam panel");
+        Container pane = window.getContentPane();
+        pane.add(cap, BorderLayout.SOUTH);
+        cap.setText("Take Photo");
+        cap.addActionListener(this);
+        window.add(panel);
+        window.setResizable(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.pack();
+        window.setVisible(true);
+        
+  
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    @Override
+    public void actionPerformed(ActionEvent e){
+        count += 1;
         
         BufferedImage image = webcam.getImage();
         
@@ -202,29 +240,8 @@ public class TestClientReg extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        webcam.close();
-        
-        /*
-        Webcam webcam = Webcam.getDefault();
-        webcam.open();
-        
-        BufferedImage image = webcam.getImage();
-        
-        pictures.add(image);
-        System.out.println(pictures);
-        
-        try {
-            ImageIO.write(image, "PNG", new File("test.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        
-        
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         String name = jTextField1.getText();
@@ -297,5 +314,9 @@ public class TestClientReg extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+
+    
+    
+
 }
 
