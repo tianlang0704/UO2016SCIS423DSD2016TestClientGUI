@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -35,7 +36,7 @@ import javax.swing.JPanel;
  */
 public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
-    ArrayList<Image> pictures = new ArrayList<Image>();
+    List<BufferedImage> pictures = new ArrayList<BufferedImage>();
     int count = 0;
     static Webcam webcam = Webcam.getDefault();
     static JPanel panel = new javax.swing.JPanel();
@@ -222,7 +223,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         cap.addActionListener(this);
         window.add(panel);
         window.setResizable(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         window.pack();
         window.setVisible(true);
         
@@ -237,6 +238,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         try {
             ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+            pictures.add(image);
         } catch (IOException ex) {
             Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
         }

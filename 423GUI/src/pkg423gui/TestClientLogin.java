@@ -34,6 +34,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
     static Webcam webcam = Webcam.getDefault();
     static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
+    static JFrame window = new JFrame("Test webcam panel");
     
     /**
      * Creates new form TestClientLogin
@@ -184,14 +185,14 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         panel.revalidate();
         panel.repaint();
         
-        JFrame window = new JFrame("Test webcam panel");
+        
         Container pane = window.getContentPane();
         pane.add(cap, BorderLayout.SOUTH);
         cap.setText("Take Photo");
         cap.addActionListener(this);
         window.add(panel);
         window.setResizable(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         window.pack();
         window.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -208,13 +209,15 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         
             try {
                 ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+                pictures.add(image);
             } catch (IOException ex) {
                 Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
             
-            webcam.close();
+            window.dispose();
+            
             
         }
     }
