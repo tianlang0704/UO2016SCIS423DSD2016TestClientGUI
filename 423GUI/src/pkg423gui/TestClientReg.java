@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import sun.misc.BASE64Encoder;
 
 
 
@@ -36,14 +38,18 @@ import javax.swing.JPanel;
  */
 public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
-    List<BufferedImage> pictures = new ArrayList<BufferedImage>();
+    ArrayList<String> pictures = new ArrayList<String>();
     int count = 0;
+    static String images = "";
     static Webcam webcam = Webcam.getDefault();
     static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
+    static ByteArrayOutputStream os = new ByteArrayOutputStream();
+    
+    
     
     /**
-     * Creates new form TestClientReg
+     * Creates new form  TestClientReg
      */
     public TestClientReg() {
         initComponents();
@@ -238,10 +244,23 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         try {
             ImageIO.write(image, "PNG", new File("test" + count + ".png"));
-            pictures.add(image);
+            ImageIO.write(image,"PNG",os);
+            
+            byte[] imageByt = os.toByteArray();
+            
+            BASE64Encoder encoder = new BASE64Encoder();
+            
+            images = encoder.encode(imageByt);
+            
+            os.close();
+               
         } catch (IOException ex) {
             Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+        
+        pictures.add(images);
+        System.out.println(pictures);
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
