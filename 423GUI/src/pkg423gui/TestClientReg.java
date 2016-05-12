@@ -256,7 +256,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
                
         } catch (IOException ex) {
             Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
+            
         }
         
         pictures.add(images);

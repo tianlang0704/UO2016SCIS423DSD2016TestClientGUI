@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +22,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import static pkg423gui.TestClientReg.images;
+import static pkg423gui.TestClientReg.os;
 import static pkg423gui.TestClientReg.webcam;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -29,12 +33,14 @@ import static pkg423gui.TestClientReg.webcam;
  */
 public class TestClientLogin extends javax.swing.JFrame implements ActionListener {
 
-    ArrayList<Image> pictures = new ArrayList<Image>();
+    ArrayList<String> pictures = new ArrayList<String>();
     int count = 0;
+    String images = "";
     static Webcam webcam = Webcam.getDefault();
     static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
     static JFrame window = new JFrame("Test webcam panel");
+    static ByteArrayOutputStream os = new ByteArrayOutputStream();
     
     /**
      * Creates new form TestClientLogin
@@ -209,10 +215,24 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         
             try {
                 ImageIO.write(image, "PNG", new File("test" + count + ".png"));
-                pictures.add(image);
-            } catch (IOException ex) {
+                ImageIO.write(image,"PNG",os);
+            
+                byte[] imageByt = os.toByteArray();
+            
+                BASE64Encoder encoder = new BASE64Encoder();
+            
+                images = encoder.encode(imageByt);
+            
+                os.close();
+                
+                pictures.add(images);
+                System.out.println(pictures);
+            }
+           
+            catch (IOException ex) {
                 Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
-            } finally{
+            } 
+            finally{
                 window.dispose();
             }
         
