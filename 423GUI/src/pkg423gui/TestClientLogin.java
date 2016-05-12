@@ -212,7 +212,10 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
                 pictures.add(image);
             } catch (IOException ex) {
                 Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                window.dispose();
             }
+        
         }
         else{
             
