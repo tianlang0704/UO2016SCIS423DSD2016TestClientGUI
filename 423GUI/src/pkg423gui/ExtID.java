@@ -135,13 +135,24 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     
     }
     */
-    public static void display(ArrayList<String> array){
+    public static void display(ArrayList<String> array, ArrayList<String> array2, StringBuilder string){
+        
+        String message = new String();
+        
+        //System.out.println(array);
+        //System.out.println(array.size());
+        int e_id = DSD2016JAVA.registerNewUser(array,array2,string);
+        if (e_id == 1){
+             message = string.toString();
+        }
+        else{
+            message = string.toString();
+        }
+        
+        ext_id.setText(message);
         
         
-        System.out.println(array);
-        System.out.println(array.size());
-        //String e_id = DSD2016JAVA.registerUser(array);
-    
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

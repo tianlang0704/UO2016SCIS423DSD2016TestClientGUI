@@ -39,6 +39,8 @@ import sun.misc.BASE64Encoder;
 public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
     ArrayList<String> pictures = new ArrayList<>();
+    ArrayList<String> pic_error = new ArrayList<>();
+    StringBuilder outMsg = new StringBuilder();
     int count = 0;
     static String images = "";
     static Webcam webcam = Webcam.getDefault();
@@ -248,7 +250,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         }
         
         pictures.add(images);
-        System.out.println(pictures);
+        //System.out.println(pictures);
     }
     
     public String[] getInfo(){
@@ -279,7 +281,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         //String[] usr_info = getInfo();
-        ExtID.display(pictures);
+        ExtID.display(pictures,pic_error,outMsg);
         
         close();
         ExtID s = new ExtID();
