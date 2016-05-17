@@ -9,9 +9,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import dsd2016.api.DSD2016JAVA;
 
 /**
  *
@@ -116,12 +118,6 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     /*
     public static void store(String[] array){
     
-        
-    
-    }
-    */
-    public static void display(String[] array){
-        
         ExtID e = new ExtID();
         
         e.field1 = new javax.swing.JTextField();
@@ -137,6 +133,14 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         e.field3.setText(array[2]);
         System.out.println(array[2]);
     
+    }
+    */
+    public static void display(ArrayList<String> array){
+        
+        
+        System.out.println(array);
+        System.out.println(array.size());
+        //String e_id = DSD2016JAVA.registerUser(array);
     
     }
 
