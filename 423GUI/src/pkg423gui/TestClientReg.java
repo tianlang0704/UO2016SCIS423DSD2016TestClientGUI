@@ -281,11 +281,14 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         //String[] usr_info = getInfo();
-        ExtID.display(pictures,pic_error,outMsg);
         
         close();
         ExtID s = new ExtID();
         s.setVisible(true);
+        
+        ExtID.display(pictures,pic_error,outMsg);
+        
+        
            
     }//GEN-LAST:event_jButton1ActionPerformed
 
