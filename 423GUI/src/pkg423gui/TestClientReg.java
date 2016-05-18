@@ -39,8 +39,6 @@ import sun.misc.BASE64Encoder;
 public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
     ArrayList<String> pictures = new ArrayList<>();
-    ArrayList<String> pic_error = new ArrayList<>();
-    StringBuilder outMsg = new StringBuilder();
     int count = 0;
     static String images = "";
     static Webcam webcam = Webcam.getDefault();
@@ -281,22 +279,16 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         //String[] usr_info = getInfo();
-        
-        close();
+        setVisible(false);
         ExtID s = new ExtID();
         s.setVisible(true);
         
-        ExtID.display(pictures,pic_error,outMsg);
+        s.display(pictures);
         
         
            
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void close() {
-        WindowEvent winClose = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClose);
-        
-    }
     /**
      * @param args the command line arguments
      */
@@ -346,9 +338,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
-
-    
-    
+   
 
 }
 

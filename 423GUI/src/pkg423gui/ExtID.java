@@ -14,6 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import dsd2016.api.DSD2016JAVA;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
 
 /**
  *
@@ -22,16 +26,29 @@ import dsd2016.api.DSD2016JAVA;
 public class ExtID extends javax.swing.JFrame implements ActionListener{
 
     static JLabel ext_id = new javax.swing.JLabel();
+    static ArrayList<String> pic_error = new ArrayList<>();
+    static StringBuilder outMsg = new StringBuilder();
+    
+    /*
     private JTextField field1;
     private JTextField field2;
     private JTextField field3;
-    
+    */
     
     /**
      * Creates new form ExtID
      */
     public ExtID() {
         initComponents();
+        //javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        
+        setLayout(new BorderLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        add(panel, BorderLayout.CENTER);
+        ext_id.setHorizontalAlignment(JLabel.CENTER);
+        ext_id.setVerticalAlignment(JLabel.CENTER);
+        add(ext_id, BorderLayout.CENTER);
     }
 
     /**
@@ -48,6 +65,7 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Home");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -59,16 +77,16 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(157, 157, 157)
+                .addGap(150, 150, 150)
                 .addComponent(jButton1)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(248, Short.MAX_VALUE)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(29, 29, 29))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -76,9 +94,9 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        close();
-        TestClientLogin h = new TestClientLogin();
-        h.setVisible(true);
+        setVisible(false);
+        TestClientLogin l = new TestClientLogin();
+        l.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -134,19 +152,22 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         System.out.println(array[2]);
     
     }
+    
     */
-    public static void display(ArrayList<String> array, ArrayList<String> array2, StringBuilder string){
+    
+    
+    public static void display(ArrayList<String> array){
         
         String message = new String();
         
         //System.out.println(array);
         //System.out.println(array.size());
-        int e_id = DSD2016JAVA.registerNewUser(array,array2,string);
+        int e_id = DSD2016JAVA.registerNewUser(array,pic_error,outMsg);
         if (e_id == 1){
-             message = string.toString();
+             message = outMsg.toString();
         }
         else{
-            message = string.toString();
+            message = outMsg.toString();
         }
         
         ext_id.setText(message);
@@ -159,11 +180,6 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 
-    private void close() {
-        WindowEvent winClose = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClose);
-        
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
