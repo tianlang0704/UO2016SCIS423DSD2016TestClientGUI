@@ -28,12 +28,8 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     static JLabel ext_id = new javax.swing.JLabel();
     static ArrayList<String> pic_error = new ArrayList<>();
     static StringBuilder outMsg = new StringBuilder();
+    static String ID = "";
     
-    /*
-    private JTextField field1;
-    private JTextField field2;
-    private JTextField field3;
-    */
     
     /**
      * Creates new form ExtID
@@ -133,27 +129,6 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
             }
         });
     }
-    /*
-    public static void store(String[] array){
-    
-        ExtID e = new ExtID();
-        
-        e.field1 = new javax.swing.JTextField();
-        e.field2 = new javax.swing.JTextField();
-        e.field3 = new javax.swing.JTextField();
-        
-        
-        //ext_id.setText("Your ID: " + id);
-        e.field1.setText(array[0]);
-        System.out.println(array[0]);
-        e.field2.setText(array[1]);
-        System.out.println(array[1]);
-        e.field3.setText(array[2]);
-        System.out.println(array[2]);
-    
-    }
-    
-    */
     
     
     public static void display(ArrayList<String> array){
@@ -164,7 +139,7 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         //System.out.println(array.size());
         int e_id = DSD2016JAVA.registerNewUser(array,pic_error,outMsg);
         if (e_id == 1){
-             message = outMsg.toString();
+            message = outMsg.toString();
         }
         else{
             message = outMsg.toString();
@@ -174,6 +149,12 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         
         
         
+    }
+    
+    public String getID(){
+    
+        ID = ext_id.getText();
+        return ID;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

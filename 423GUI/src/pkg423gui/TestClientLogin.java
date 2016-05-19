@@ -8,6 +8,7 @@ package pkg423gui;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
+import static dsd2016.api.DSD2016JAVA.validateUser;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.*;
@@ -33,9 +34,15 @@ import sun.misc.BASE64Encoder;
  */
 public class TestClientLogin extends javax.swing.JFrame implements ActionListener {
 
-    ArrayList<String> pictures = new ArrayList<String>();
+    
     int count = 0;
+    String picture = "";
     String images = "";
+    String[] info;
+    String ID = "";
+    String message = "";
+    TestClientReg t;
+    static StringBuilder outMsg = new StringBuilder();
     static Webcam webcam = Webcam.getDefault();
     static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
@@ -164,14 +171,23 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         close();
-        TestClientReg t = new TestClientReg();
+        t = new TestClientReg();
         t.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        String password = jPasswordField1.getText();
-        System.out.println(password);
+        info = t.getInfo();
+        ID = info[3];
+        int valid = validateUser(ID, picture, outMsg);
+        if(valid == 1){
+            setVisible(false);
+            userInfo i = new userInfo();
+            i.setVisible(true);
+        }
+        else {
+            message = outMsg.toString();
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -225,8 +241,8 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             
                 os.close();
                 
-                pictures.add(images);
-                System.out.println(pictures);
+                picture = images;
+                //System.out.println(picture);
             }
            
             catch (IOException ex) {
@@ -234,12 +250,14 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             } 
             finally{
                 window.dispose();
+                webcam.close();
             }
         
         }
         else{
             
             window.dispose();
+            webcam.close();
             
             
         }

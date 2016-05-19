@@ -41,6 +41,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     ArrayList<String> pictures = new ArrayList<>();
     int count = 0;
     static String images = "";
+    static ExtID s;
     static Webcam webcam = Webcam.getDefault();
     static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
@@ -253,7 +254,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     
     public String[] getInfo(){
         
-        String info[] = new String[3];
+        String info[] = new String[4];
         
         String name = jTextField1.getText();
         info[0] = name;
@@ -273,6 +274,8 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
             //System.out.println(gender);
         }
         
+        info[3] = s.getID();
+        
         return info;
     }
     
@@ -280,7 +283,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         //String[] usr_info = getInfo();
         setVisible(false);
-        ExtID s = new ExtID();
+        s = new ExtID();
         s.setVisible(true);
         
         s.display(pictures);
