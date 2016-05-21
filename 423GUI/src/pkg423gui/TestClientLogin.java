@@ -16,17 +16,14 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import static pkg423gui.TestClientReg.images;
-import static pkg423gui.TestClientReg.os;
-import static pkg423gui.TestClientReg.webcam;
-import sun.misc.BASE64Encoder;
+
 
 /**
  *
@@ -45,7 +42,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
     static StringBuilder outMsg = new StringBuilder();
     static Webcam webcam = Webcam.getDefault();
     static JButton cap = new javax.swing.JButton();
-    static JFrame window = new JFrame("Test webcam panel");
+    static JFrame window = new JFrame("webcam panel");
     static ByteArrayOutputStream os = new ByteArrayOutputStream();
     
     /**
@@ -72,7 +69,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Welcome"));
 
@@ -189,6 +186,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         }
         else {
             message = outMsg.toString();
+            System.out.println(message);
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(message));
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -237,44 +235,45 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
     
     @Override
     public void actionPerformed(ActionEvent e){
-        
         count += 1;
         
         if(count == 1){
-            
-            BufferedImage image = webcam.getImage();
-        
+            //Get webcam image and resize to 160 in width and maintain the ratio
+            BufferedImage oriImage = webcam.getImage();
+            int newWidth = 160;
+            int newHeight = 160 * oriImage.getHeight() / oriImage.getWidth();
+
+            //Create buffered image with shrinked size
+            Image buffImage = oriImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+            BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = image.createGraphics();
+            g.drawImage(buffImage, 0, 0, null);
+            g.dispose();
+
             try {
-                ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+                //ImageIO.write(image, "PNG", new File("test" + count + ".png"));
                 ImageIO.write(image,"PNG",os);
-            
+
                 byte[] imageByt = os.toByteArray();
-            
-                BASE64Encoder encoder = new BASE64Encoder();
-            
-                images = encoder.encode(imageByt);
-            
+                Base64.Encoder encoder = Base64.getEncoder();
+
+                images = encoder.encodeToString(imageByt);
+
                 os.close();
-                
+
                 picture = images;
                 //System.out.println(picture);
             }
-           
+
             catch (IOException ex) {
                 Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
             } 
             finally{
-                window.dispose();
-                webcam.close();
+                window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             }
-        
         }
         else{
-            
-            window.dispose();
-            webcam.close();
-            
-            
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
         }
     }
     /**

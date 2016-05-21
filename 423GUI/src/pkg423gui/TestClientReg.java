@@ -10,8 +10,8 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -21,14 +21,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import sun.misc.BASE64Encoder;
 
 
 
@@ -43,6 +42,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     int count = 0;
     static String images = "";
     static ExtID s;
+    static JFrame window = new JFrame("Reg webcam panel");
     static Webcam webcam = Webcam.getDefault();
     static JButton cap = new javax.swing.JButton();
     static ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -212,7 +212,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         panel.revalidate();
         panel.repaint();
         
-        JFrame window = new JFrame("Reg webcam panel");
+        window = new JFrame("Reg webcam panel");
         Container pane = window.getContentPane();
         pane.add(cap, BorderLayout.SOUTH);
         cap.setText("Take Photo");
@@ -242,18 +242,26 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     public void actionPerformed(ActionEvent e){
         count += 1;
         
-        BufferedImage image = webcam.getImage();
+        //Get webcam image and resize to 160 in width and maintain the ratio
+        BufferedImage oriImage = webcam.getImage();
+        int newWidth = 160;
+        int newHeight = 160 * oriImage.getHeight() / oriImage.getWidth();
+        
+        //Create buffered image with shrinked size
+        Image buffImage = oriImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = image.createGraphics();
+        g.drawImage(buffImage, 0, 0, null);
+        g.dispose();
         
         try {
-            ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+            //ImageIO.write(image, "PNG", new File("test" + count + ".png"));
             ImageIO.write(image,"PNG",os);
             
             byte[] imageByt = os.toByteArray();
+            Base64.Encoder encoder = Base64.getEncoder();
             
-            BASE64Encoder encoder = new BASE64Encoder();
-            
-            images = encoder.encode(imageByt);
-            
+            images = encoder.encodeToString(imageByt);
             os.close();
                
         } catch (IOException ex) {
@@ -261,6 +269,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
             
         }
         
+        window.setTitle("Image #: " + Integer.toString(count));
         pictures.add(images);
         //System.out.println(pictures);
     }
