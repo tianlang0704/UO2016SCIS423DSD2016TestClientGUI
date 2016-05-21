@@ -138,6 +138,7 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         
         //System.out.println(array);
         //System.out.println(array.size());
+        outMsg = new StringBuilder();
         int e_id = DSD2016JAVA.registerNewUser(array,pic_error,outMsg);
         if (e_id == 1){
             message = outMsg.toString();
