@@ -1,2 +1,4 @@
-/423GUI/dist/
-/423GUI/build/
+423GUI/dist/*
+423GUI/build/*
+!423GUI/dist/423GUI.jar
+!423GUI/dist/lib
