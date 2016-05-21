@@ -44,7 +44,9 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         add(panel, BorderLayout.CENTER);
         ext_id.setHorizontalAlignment(JLabel.CENTER);
         ext_id.setVerticalAlignment(JLabel.CENTER);
+        ext_id.setText("123");
         add(ext_id, BorderLayout.CENTER);
+        
     }
 
     /**

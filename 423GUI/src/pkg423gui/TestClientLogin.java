@@ -44,7 +44,6 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
     TestClientReg t;
     static StringBuilder outMsg = new StringBuilder();
     static Webcam webcam = Webcam.getDefault();
-    static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
     static JFrame window = new JFrame("Test webcam panel");
     static ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -148,6 +147,8 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
                 .addContainerGap(73, Short.MAX_VALUE))
         );
 
+        jPasswordField1.getAccessibleContext().setAccessibleName("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,8 +178,9 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        info = t.getInfo();
-        ID = info[3];
+        //info = t.getInfo();
+        //ID = info[3];
+        ID = new String(jPasswordField1.getPassword());
         int valid = validateUser(ID, picture, outMsg);
         if(valid == 1){
             setVisible(false);
@@ -187,8 +189,8 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         }
         else {
             message = outMsg.toString();
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(message));
         }
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -202,6 +204,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
 	wpanel.setDisplayDebugInfo(true);
 	wpanel.setImageSizeDisplayed(true);
         
+        JPanel panel = new javax.swing.JPanel();
 	panel.add(wpanel);
 	panel.setVisible(true);
         panel.revalidate();
@@ -216,6 +219,18 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         window.setResizable(true);
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         window.pack();
+        
+        window.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.out.println("closing");
+                webcam.close();
+                e.getWindow().dispose();
+            }
+        });
+        
         window.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 

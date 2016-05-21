@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -43,7 +44,6 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     static String images = "";
     static ExtID s;
     static Webcam webcam = Webcam.getDefault();
-    static JPanel panel = new javax.swing.JPanel();
     static JButton cap = new javax.swing.JButton();
     static ByteArrayOutputStream os = new ByteArrayOutputStream();
     
@@ -206,12 +206,13 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
 	wpanel.setDisplayDebugInfo(true);
 	wpanel.setImageSizeDisplayed(true);
         
+        JPanel panel = new javax.swing.JPanel();
 	panel.add(wpanel);
 	panel.setVisible(true);
         panel.revalidate();
         panel.repaint();
         
-        JFrame window = new JFrame("Test webcam panel");
+        JFrame window = new JFrame("Reg webcam panel");
         Container pane = window.getContentPane();
         pane.add(cap, BorderLayout.SOUTH);
         cap.setText("Take Photo");
@@ -220,6 +221,18 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         window.setResizable(true);
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         window.pack();
+        
+        window.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.out.println("closing");
+                webcam.close();
+                e.getWindow().dispose();
+            }
+        });
+        
         window.setVisible(true);
         
   
@@ -285,7 +298,6 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         setVisible(false);
         s = new ExtID();
         s.setVisible(true);
-        
         s.display(pictures);
         
         
