@@ -251,7 +251,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             g.dispose();
 
             try {
-                //ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+                ImageIO.write(image, "PNG", new File("test" + count + ".png"));
                 ImageIO.write(image,"PNG",os);
 
                 byte[] imageByt = os.toByteArray();

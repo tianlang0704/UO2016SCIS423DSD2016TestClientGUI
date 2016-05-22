@@ -255,7 +255,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         g.dispose();
         
         try {
-            //ImageIO.write(image, "PNG", new File("test" + count + ".png"));
+            ImageIO.write(image, "PNG", new File("test" + count + ".png"));
             ImageIO.write(image,"PNG",os);
             
             byte[] imageByt = os.toByteArray();
