@@ -3,11 +3,16 @@ package pkg423guibackend;
 import java.util.ArrayList;
 import dsd2016.api.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class GUIBackend {
+    
+    private static final String userInfoLoc = "/TestClientData";
+    private static final String userDataName = "/userinfo.dat";
 	
     public static int[] registerUser(String name, String email, String gender, ArrayList<String> inB64Pics, ArrayList<String> outB64BadPics) {
         int errCnt = 0;
@@ -64,11 +69,11 @@ public class GUIBackend {
         }
         
         if(codes[0] == GUIConstants.SUCCESS) {
-            File dir = new File("/TestClientData");
+            File dir = new File(userInfoLoc);
             if(!dir.exists()) {
                     dir.mkdir();
             }
-            File f = new File("/TestClientData/userinfo.dat");
+            File f = new File(userInfoLoc + userDataName);
             if(!f.exists()) {
                 try {
                     f.createNewFile();
@@ -76,7 +81,7 @@ public class GUIBackend {
                     w.printf("%s,%s,%s,%s", outMsg.toString(), name, email, gender);
                     w.flush();
                     w.close();
-                    w = new PrintWriter("/TestClientData/README.txt");
+                    w = new PrintWriter(userInfoLoc + "/README.txt");
                     w.print("The userinfo.dat file represents \"registered\" user data for the Spring 2016 CIS 423 class' Test Client program. Do not alter.");
                     w.flush();
                     w.close();
@@ -100,7 +105,7 @@ public class GUIBackend {
         return codes;
     }
 	
-	public static int[] validateUser(String userID, String inB64Pic) {
+	public static int[] validateUser(String userID, String inB64Pic, StringBuilder userData) {
 		StringBuilder outMsg = new StringBuilder();
 		int[] codes = new int[2];
                 int result = DSD2016JAVA.validateUser(userID, inB64Pic, outMsg);
@@ -109,6 +114,24 @@ public class GUIBackend {
                         : result == DSD2016JAVA.ERRORCODE_LOGIN_UNKNOWN ? GUIConstants.UNKNOWN_ERROR
                         : GUIConstants.SUCCESS;
                 codes[0] = codes[1] == GUIConstants.SUCCESS ? GUIConstants.SUCCESS : GUIConstants.FAILURE;
+                
+                if(codes[0] == GUIConstants.SUCCESS) {
+                    try {
+                    Scanner sc = new Scanner(new File(userInfoLoc + userDataName));
+                    String line;
+                    while(sc.hasNext()) {
+                        line = sc.nextLine();
+                        if(line.contains(userID)) {
+                            userData.append(line);
+                            break;
+                        }
+                    }
+                    
+                    sc.close();
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 
 		return codes;
 	}
