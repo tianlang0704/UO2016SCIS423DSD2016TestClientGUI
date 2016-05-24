@@ -2,6 +2,10 @@ package pkg423guibackend;
 
 import java.util.ArrayList;
 import dsd2016.api.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class GUIBackend {
 	
@@ -55,6 +59,40 @@ public class GUIBackend {
                 //remove bad pics from list of taken pics
                 if(inB64Pics.contains(outB64BadPics.get(i))) {
                     inB64Pics.remove(outB64BadPics.get(i));
+                }
+            }
+        }
+        
+        if(codes[0] == GUIConstants.SUCCESS) {
+            File dir = new File("/TestClientData");
+            if(!dir.exists()) {
+                    dir.mkdir();
+            }
+            File f = new File("/TestClientData/userinfo.dat");
+            if(!f.exists()) {
+                try {
+                    f.createNewFile();
+                    PrintWriter w = new PrintWriter(f);
+                    w.printf("%s,%s,%s,%s", outMsg.toString(), name, email, gender);
+                    w.flush();
+                    w.close();
+                    w = new PrintWriter("/TestClientData/README.txt");
+                    w.print("The userinfo.dat file represents \"registered\" user data for the Spring 2016 CIS 423 class' Test Client program. Do not alter.");
+                    w.flush();
+                    w.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                try {
+                    PrintWriter w;
+                    w = new PrintWriter(new FileOutputStream(f, true));
+                    w.printf("\n%s,%s,%s,%s", outMsg.toString(), name, email, gender);
+                    w.flush();
+                    w.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
