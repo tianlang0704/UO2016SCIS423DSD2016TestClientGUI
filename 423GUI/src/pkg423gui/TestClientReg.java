@@ -5,6 +5,9 @@
  */
 package pkg423gui;
 
+
+import pkg423guibackend.GUIBackend;
+import pkg423guibackend.GUIConstants;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
@@ -32,6 +35,8 @@ import sun.misc.BASE64Encoder;
 
 
 
+
+
 /**
  *
  * @author Emmalie
@@ -39,6 +44,7 @@ import sun.misc.BASE64Encoder;
 public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
     ArrayList<String> pictures = new ArrayList<>();
+    static ArrayList<String> pic_error = new ArrayList<>();
     int count = 0;
     static String images = "";
     static ExtID s;
@@ -287,6 +293,9 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         s.setVisible(true);
         
         s.display(pictures);
+        String[] usr_info = getInfo();
+        System.out.println(usr_info);
+        //GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
         
         
            
