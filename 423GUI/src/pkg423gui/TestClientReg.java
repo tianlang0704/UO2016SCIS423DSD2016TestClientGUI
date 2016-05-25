@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -294,8 +295,8 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         s.display(pictures);
         String[] usr_info = getInfo();
-        System.out.println(usr_info);
-        //GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
+        System.out.println(Arrays.toString(usr_info));
+        GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
         
         
            
