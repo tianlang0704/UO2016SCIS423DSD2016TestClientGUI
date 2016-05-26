@@ -1,0 +1,1 @@
+The userinfo.dat file represents "registered" user data for the Spring 2016 CIS 423 class' Test Client program. Do not alter.

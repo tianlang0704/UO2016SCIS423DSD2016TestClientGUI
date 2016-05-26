@@ -2,30 +2,41 @@ package pkg423guibackend;
 
 import java.util.ArrayList;
 import dsd2016.api.*;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUIBackend {
     
-    private static final String userInfoLoc = "/TestClientData";
-    private static final String userDataName = "/userinfo.dat";
+    private static final String userInfoLoc = "TestClientData";
+    private static final String userDataName = "userinfo.dat";
 	
-    public static int[] registerUser(String name, String email, String gender, ArrayList<String> inB64Pics, ArrayList<String> outB64BadPics) {
+    public static int[] registerUser(String name, String email, String gender, ArrayList<String> inB64Pics, ArrayList<String> outB64BadPics) throws FileNotFoundException, IOException {
+        
+        System.out.println("made it to backend");
+        System.out.println(name);
+        System.out.println(email);
+        System.out.println(gender);
+        
+        
         int errCnt = 0;
-        boolean goodName, goodEmail, goodGender;
+        boolean goodName, goodEmail;
         
         //Initial input checking.
-        if(!(goodName = name.matches("^[a-zA-Z]+$"))) {
+        if(!(goodName = name.matches("^[\\p{L} .'-]+$"))) {
+            System.out.println("name match");
             errCnt++;
         }
         if(!(goodEmail = email.matches("^.+@.+\\..+$"))) {
-            errCnt++;
-        }
-        if(!(goodGender = gender.matches("[a-zA-Z]"))) {
+            System.out.println("email match");
             errCnt++;
         }
         
@@ -39,9 +50,6 @@ public class GUIBackend {
             }
             if(!goodEmail) {
                 codes[index++] = GUIConstants.INVALID_EMAIL;
-            }
-            if(!goodGender) {
-                codes[index++] = GUIConstants.INVALID_GENDER;
             }
             
             return codes;
@@ -68,13 +76,39 @@ public class GUIBackend {
             }
         }
         
+        //StringBuilder outMsg = new StringBuilder();
+        /*
+                System.out.println("creating dir");
+        File f = new File(name);
+        if(!f.exists()){
+            f.createNewFile();
+        }
+        
+        FileWriter fw = new FileWriter(f.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(name);
+        bw.write("\n");
+        bw.write(email);
+        bw.write("\n");
+        bw.write(gender);
+        bw.close();
+        
+        System.out.println("Done");
+        */
+        
         if(codes[0] == GUIConstants.SUCCESS) {
+            System.out.println("creating dir");
             File dir = new File(userInfoLoc);
             if(!dir.exists()) {
-                    dir.mkdir();
+                System.out.println("NEW");
+                dir.mkdir();
+                dir.createNewFile();
+                System.out.println("made dir");
             }
+            
             File f = new File(userInfoLoc + userDataName);
             if(!f.exists()) {
+                System.out.println("create new file");
                 try {
                     f.createNewFile();
                     PrintWriter w = new PrintWriter(f);
@@ -100,11 +134,13 @@ public class GUIBackend {
                     e.printStackTrace();
                 }
             }
+            
         }
-
-        return codes;
+        
+            return codes;
+        
     }
-	
+	/*
 	public static int[] validateUser(String userID, String inB64Pic, StringBuilder userData) {
 		StringBuilder outMsg = new StringBuilder();
 		int[] codes = new int[2];
@@ -135,4 +171,5 @@ public class GUIBackend {
                 
 		return codes;
 	}
+*/
 }

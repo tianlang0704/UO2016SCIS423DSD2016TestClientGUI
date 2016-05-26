@@ -285,38 +285,56 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         String name = jTextField1.getText();
         info[0] = name;
-        //System.out.println(name);
+        System.out.println(info[0]);
         String email = jTextField2.getText();
         info[1] = email;
-        //System.out.println(email);
+        System.out.println(info[1]);
         String gender = "";
         if(jRadioButton1.isSelected()){
             gender = jRadioButton1.getText();
             info[2]=gender;
-            //System.out.println(gender);
+            System.out.println(info[2]);
         }
         if(jRadioButton2.isSelected()){
             gender = jRadioButton2.getText();
             info[2] = gender;
-            //System.out.println(gender);
+            System.out.println(info[2]);
         }
         
-        info[3] = s.getID();
-        
+        //info[3] = s.getID();
+        System.out.println(Arrays.toString(info));
         return info;
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         //String[] usr_info = getInfo();
+        //System.out.println(Arrays.toString(usr_info));
+        //GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
+        String name = jTextField1.getText();
+        System.out.println(name);
+        String email = jTextField2.getText();
+        System.out.println(email);
+        String gender = "";
+        if(jRadioButton1.isSelected()){
+            gender = jRadioButton1.getText();
+        System.out.println(gender);
+        }
+        if(jRadioButton2.isSelected()){
+            gender = jRadioButton2.getText();
+        System.out.println(gender);
+        }
+        try {
+            GUIBackend.registerUser(name,email,gender,pictures,pic_error);
+        } catch (IOException ex) {
+            Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setVisible(false);
         s = new ExtID();
         s.setVisible(true);
         
         s.display(pictures);
-        String[] usr_info = getInfo();
-        System.out.println(Arrays.toString(usr_info));
-        GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
+        
         
         
            
