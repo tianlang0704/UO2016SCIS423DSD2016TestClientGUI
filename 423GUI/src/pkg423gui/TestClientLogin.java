@@ -187,8 +187,8 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             userInfo i = new userInfo();
             i.setVisible(true);
             
-            //ArrayList<String> usr_data = readInfoFromUserDataFile(ID);
-            //i.display(usr_data);
+            ArrayList<String> usr_data = readInfoFromUserDataFile(ID);
+            i.display(usr_data);
         }
         else {
             message = outMsg.toString();
@@ -289,7 +289,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             }
         });
     }
-    /*
+    
     public static ArrayList<String> readInfoFromUserDataFile(String id)
     {
         
@@ -332,12 +332,12 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
 
         } catch (IOException ex)
         {
-	 ex.printStackTrace();
+	    ex.printStackTrace();
         }
 
         return userData;
     }
-    */
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Camera;
     private javax.swing.JButton Login;
