@@ -7,6 +7,7 @@ package pkg423gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -107,12 +108,12 @@ public class userInfo extends javax.swing.JFrame {
         });
     }
     
-    public static void display(String[] array){
+    public static void display(ArrayList<String> array){
         
-        id.setText(array[0]);
-        name.setText(array[1]);
-        email.setText(array[2]);
-        gender.setText(array[3]);
+        id.setText(array.get(0));
+        name.setText(array.get(1));
+        email.setText(array.get(2));
+        gender.setText(array.get(3));
     
     }
 

@@ -17,7 +17,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -177,8 +179,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         
-        //info = t.getInfo();
-        //ID = info[3];
+        
         ID = new String(user_id.getPassword());
         int valid = rsImgValidateUser(ID, picture, outMsg);
         if(valid == 1){
@@ -186,7 +187,8 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             userInfo i = new userInfo();
             i.setVisible(true);
             
-            i.display(user_info);
+            //ArrayList<String> usr_data = readInfoFromUserDataFile(ID);
+            //i.display(usr_data);
         }
         else {
             message = outMsg.toString();
@@ -242,7 +244,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         count += 1;
         
         if(count == 1){
-            //Get webcam image and resize to 160 in width and maintain the ratio
+            
             BufferedImage oriImage = webcam.getImage();
             picture = oriImage;
 
@@ -287,7 +289,55 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
             }
         });
     }
+    /*
+    public static ArrayList<String> readInfoFromUserDataFile(String id)
+    {
+        
+        ArrayList<String> userData = new ArrayList<>();
 
+        String userInfoLoc = "TestClientData/";
+        String userDataName = "userinfo.dat";
+
+        
+        File f = new File(userInfoLoc + userDataName);
+
+        //Try-catch in case file doesn't exist
+        try
+        {
+	    //Scanner to read in the file
+	    Scanner in = new Scanner(f);
+	    String line;
+
+	    //Read through each line in the file
+	    while (in.hasNextLine())
+	    {
+		line = in.nextLine();
+
+		//If the line being read contains the given id, it is the entry we want to read in
+		if (line.contains(id))
+		{
+		   //Another scanner to read each comma-separated segment
+		   Scanner reader = new Scanner(line);
+		   reader.useDelimiter(",");
+
+		   //Reads through every element in the line (name, gender, etc.) and add it to userData
+		   while (reader.hasNext())
+		   {
+			  userData.add(reader.next());
+		   }
+		   reader.close();
+		}
+	    }
+	    in.close();
+
+        } catch (IOException ex)
+        {
+	 ex.printStackTrace();
+        }
+
+        return userData;
+    }
+    */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Camera;
     private javax.swing.JButton Login;
