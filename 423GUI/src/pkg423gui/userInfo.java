@@ -8,6 +8,8 @@ package pkg423gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -27,15 +29,30 @@ public class userInfo extends javax.swing.JFrame {
      * Creates new form userInfo
      */
     public userInfo() {
+        
         initComponents();
-        setLayout(new BorderLayout());
+        
+        JPanel n = new JPanel();
+        JPanel e = new JPanel();
+        JPanel g = new JPanel();
+        JPanel i = new JPanel();
+        
+        n.add(name);
+        e.add(email);
+        g.add(gender);
+        i.add(id);
+        //setLayout(new BorderLayout());
+        //JPanel panel = new JPanel();
+        //panel.setLayout(new FlowLayout());
+        //add(panel, BorderLayout.CENTER);
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        add(panel, BorderLayout.CENTER);
-        add(name);
-        add(email);
-        add(gender);
-        add(id);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        setVisible(true);
+        
+        add(n);
+        add(e);
+        add(g);
+        add(i);
     }
 
     /**
@@ -100,6 +117,7 @@ public class userInfo extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
