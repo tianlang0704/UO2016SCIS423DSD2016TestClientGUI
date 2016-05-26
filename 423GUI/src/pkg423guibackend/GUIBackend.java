@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class GUIBackend {
     
-    private static final String userInfoLoc = "TestClientData";
+    private static final String userInfoLoc = "TestClientData/";
     private static final String userDataName = "userinfo.dat";
 	
     public static int[] registerUser(String name, String email, String gender, ArrayList<String> inB64Pics, ArrayList<String> outB64BadPics) throws FileNotFoundException, IOException {
@@ -97,6 +97,7 @@ public class GUIBackend {
         */
         
         if(codes[0] == GUIConstants.SUCCESS) {
+            
             System.out.println("creating dir");
             File dir = new File(userInfoLoc);
             if(!dir.exists()) {
@@ -140,7 +141,7 @@ public class GUIBackend {
             return codes;
         
     }
-	/*
+	
 	public static int[] validateUser(String userID, String inB64Pic, StringBuilder userData) {
 		StringBuilder outMsg = new StringBuilder();
 		int[] codes = new int[2];
@@ -171,5 +172,5 @@ public class GUIBackend {
                 
 		return codes;
 	}
-*/
+
 }
