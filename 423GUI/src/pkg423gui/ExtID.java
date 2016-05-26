@@ -139,7 +139,7 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     }
     
     
-    public static void display(ArrayList<String> array){
+    public static void display(){
         
         String message = new String();
         String userInfoLoc = "TestClientData/";

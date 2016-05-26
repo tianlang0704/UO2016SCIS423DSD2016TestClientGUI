@@ -2,6 +2,7 @@ package pkg423guibackend;
 
 import java.util.ArrayList;
 import dsd2016.api.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ public class GUIBackend {
     private static final String userInfoLoc = "TestClientData/";
     private static final String userDataName = "userinfo.dat";
 	
-    public static int[] registerUser(String name, String email, String gender, ArrayList<String> inB64Pics, ArrayList<String> outB64BadPics) throws FileNotFoundException, IOException {
+    public static int[] registerUser(String name, String email, String gender, ArrayList<BufferedImage> inB64Pics, ArrayList<String> outB64BadPics) throws FileNotFoundException, IOException {
         
         System.out.println("made it to backend");
         System.out.println(name);
@@ -57,7 +58,7 @@ public class GUIBackend {
         
         StringBuilder outMsg = new StringBuilder();
         int[] codes = new int[2];
-        int result = DSD2016JAVA.registerNewUser(inB64Pics, outB64BadPics, outMsg);
+        int result = DSD2016JAVA.rsImgRegisterNewUser(inB64Pics, outB64BadPics, outMsg);
         codes[1] = result == DSD2016JAVA.ERRORCODE_REGISTER_FAIL ? GUIConstants.FAILURE
                 : result == DSD2016JAVA.ERRORCODE_REGISTER_IO_ERROR ? GUIConstants.IO_ERROR
                 : result == DSD2016JAVA.ERRORCODE_REGISTER_UNKNOWN ? GUIConstants.UNKNOWN_ERROR

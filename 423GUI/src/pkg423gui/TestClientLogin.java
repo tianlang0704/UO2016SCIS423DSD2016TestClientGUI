@@ -8,6 +8,7 @@ package pkg423gui;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
+import static dsd2016.api.DSD2016JAVA.rsImgValidateUser;
 import static dsd2016.api.DSD2016JAVA.validateUser;
 import java.awt.Toolkit;
 import java.awt.event.*;
@@ -33,7 +34,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
 
     
     int count = 0;
-    String picture = "";
+    BufferedImage picture;
     String images = "";
     String[] info;
     String[] user_info;
@@ -179,7 +180,7 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         //info = t.getInfo();
         //ID = info[3];
         ID = new String(user_id.getPassword());
-        int valid = validateUser(ID, picture, outMsg);
+        int valid = rsImgValidateUser(ID, picture, outMsg);
         if(valid == 1){
             setVisible(false);
             userInfo i = new userInfo();
@@ -243,37 +244,10 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         if(count == 1){
             //Get webcam image and resize to 160 in width and maintain the ratio
             BufferedImage oriImage = webcam.getImage();
-            int newWidth = 160;
-            int newHeight = 160 * oriImage.getHeight() / oriImage.getWidth();
+            picture = oriImage;
 
-            //Create buffered image with shrinked size
-            Image buffImage = oriImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-            BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = image.createGraphics();
-            g.drawImage(buffImage, 0, 0, null);
-            g.dispose();
-
-            try {
-                ImageIO.write(image, "PNG", new File("test" + count + ".png"));
-                ImageIO.write(image,"PNG",os);
-
-                byte[] imageByt = os.toByteArray();
-                Base64.Encoder encoder = Base64.getEncoder();
-
-                images = encoder.encodeToString(imageByt);
-
-                os.close();
-
-                picture = images;
-                //System.out.println(picture);
-            }
-
-            catch (IOException ex) {
-                Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            finally{
-                window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-            }
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            
         }
         else{
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));

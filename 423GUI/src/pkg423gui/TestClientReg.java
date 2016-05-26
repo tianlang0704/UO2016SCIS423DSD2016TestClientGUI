@@ -42,7 +42,7 @@ import javax.swing.JPanel;
  */
 public class TestClientReg extends javax.swing.JFrame implements ActionListener {
 
-    ArrayList<String> pictures = new ArrayList<>();
+    ArrayList<BufferedImage> pictures = new ArrayList<>();
     static ArrayList<String> pic_error = new ArrayList<>();
     int count = 0;
     static String images = "";
@@ -249,33 +249,9 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         //Get webcam image and resize to 160 in width and maintain the ratio
         BufferedImage oriImage = webcam.getImage();
-        int newWidth = 160;
-        int newHeight = 160 * oriImage.getHeight() / oriImage.getWidth();
-        
-        //Create buffered image with shrinked size
-        Image buffImage = oriImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
-        g.drawImage(buffImage, 0, 0, null);
-        g.dispose();
-        
-        try {
-            ImageIO.write(image, "PNG", new File("test" + count + ".png"));
-            ImageIO.write(image,"PNG",os);
-            
-            byte[] imageByt = os.toByteArray();
-            Base64.Encoder encoder = Base64.getEncoder();
-            
-            images = encoder.encodeToString(imageByt);
-            os.close();
-               
-        } catch (IOException ex) {
-            Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }
         
         window.setTitle("Image #: " + Integer.toString(count));
-        pictures.add(images);
+        pictures.add(oriImage);
         //System.out.println(pictures);
     }
     
@@ -306,7 +282,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         s = new ExtID();
         s.setVisible(true);
         
-        s.display(pictures);
+        s.display();
         
         
         
