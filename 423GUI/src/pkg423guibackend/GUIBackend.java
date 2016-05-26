@@ -76,26 +76,6 @@ public class GUIBackend {
             }
         }
         
-        //StringBuilder outMsg = new StringBuilder();
-        /*
-                System.out.println("creating dir");
-        File f = new File(name);
-        if(!f.exists()){
-            f.createNewFile();
-        }
-        
-        FileWriter fw = new FileWriter(f.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(name);
-        bw.write("\n");
-        bw.write(email);
-        bw.write("\n");
-        bw.write(gender);
-        bw.close();
-        
-        System.out.println("Done");
-        */
-        
         if(codes[0] == GUIConstants.SUCCESS) {
             
             System.out.println("creating dir");

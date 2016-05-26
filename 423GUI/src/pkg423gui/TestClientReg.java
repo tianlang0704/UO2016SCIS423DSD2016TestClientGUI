@@ -79,9 +79,9 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        SignUp = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        Camera = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
 
@@ -99,20 +99,20 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
 
         jTextField2.setText("johndoe@gmail.com");
 
-        jButton1.setText("Sign Up");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        SignUp.setText("Sign Up");
+        SignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                SignUpActionPerformed(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Take Picture");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg423gui/FotoFlexer_Photo.jpg"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Camera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pkg423gui/FotoFlexer_Photo.jpg"))); // NOI18N
+        Camera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                CameraActionPerformed(evt);
             }
         });
 
@@ -133,10 +133,10 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(108, 108, 108)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Camera, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +173,9 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
                 .addGap(26, 26, 26)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Camera, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(jButton1)
+                .addComponent(SignUp)
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -199,7 +199,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void CameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CameraActionPerformed
         
         
         webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -241,7 +241,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         window.setVisible(true);
         
   
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_CameraActionPerformed
     
     @Override
     public void actionPerformed(ActionEvent e){
@@ -306,7 +306,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         return info;
     }
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
         
         //String[] usr_info = getInfo();
         //System.out.println(Arrays.toString(usr_info));
@@ -338,7 +338,7 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         
         
            
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_SignUpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,9 +376,9 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Camera;
+    private javax.swing.JButton SignUp;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
