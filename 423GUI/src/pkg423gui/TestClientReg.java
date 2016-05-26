@@ -77,13 +77,13 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        Name = new javax.swing.JTextField();
+        email_ = new javax.swing.JTextField();
         SignUp = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         Camera = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        Male = new javax.swing.JRadioButton();
+        Female = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,9 +95,9 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
 
         jLabel4.setText("Gender");
 
-        jTextField1.setText("John Doe");
+        Name.setText("John Doe");
 
-        jTextField2.setText("johndoe@gmail.com");
+        email_.setText("johndoe@gmail.com");
 
         SignUp.setText("Sign Up");
         SignUp.addActionListener(new java.awt.event.ActionListener() {
@@ -116,11 +116,11 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
             }
         });
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("M");
+        buttonGroup1.add(Male);
+        Male.setText("M");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("F");
+        buttonGroup1.add(Female);
+        Female.setText("F");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,12 +146,12 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
                         .addGap(60, 60, 60)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                                .addComponent(jTextField1))
+                                .addComponent(email_, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                .addComponent(Name))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(Male)
                                 .addGap(10, 10, 10)
-                                .addComponent(jRadioButton2)))))
+                                .addComponent(Female)))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -160,16 +160,16 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
                 .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(Male)
+                    .addComponent(Female))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -279,49 +279,22 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
         //System.out.println(pictures);
     }
     
-    public String[] getInfo(){
-        
-        String info[] = new String[4];
-        
-        String name = jTextField1.getText();
-        info[0] = name;
-        System.out.println(info[0]);
-        String email = jTextField2.getText();
-        info[1] = email;
-        System.out.println(info[1]);
-        String gender = "";
-        if(jRadioButton1.isSelected()){
-            gender = jRadioButton1.getText();
-            info[2]=gender;
-            System.out.println(info[2]);
-        }
-        if(jRadioButton2.isSelected()){
-            gender = jRadioButton2.getText();
-            info[2] = gender;
-            System.out.println(info[2]);
-        }
-        
-        //info[3] = s.getID();
-        System.out.println(Arrays.toString(info));
-        return info;
-    }
-    
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
         
         //String[] usr_info = getInfo();
         //System.out.println(Arrays.toString(usr_info));
         //GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
-        String name = jTextField1.getText();
+        String name = Name.getText();
         System.out.println(name);
-        String email = jTextField2.getText();
+        String email = email_.getText();
         System.out.println(email);
         String gender = "";
-        if(jRadioButton1.isSelected()){
-            gender = jRadioButton1.getText();
+        if(Male.isSelected()){
+            gender = Male.getText();
         System.out.println(gender);
         }
-        if(jRadioButton2.isSelected()){
-            gender = jRadioButton2.getText();
+        if(Female.isSelected()){
+            gender = Female.getText();
         System.out.println(gender);
         }
         try {
@@ -377,17 +350,17 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Camera;
+    private javax.swing.JRadioButton Female;
+    private javax.swing.JRadioButton Male;
+    private javax.swing.JTextField Name;
     private javax.swing.JButton SignUp;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField email_;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
    
 

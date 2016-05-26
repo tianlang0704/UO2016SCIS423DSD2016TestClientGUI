@@ -5,17 +5,36 @@
  */
 package pkg423gui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
 /**
  *
  * @author Emmalie
  */
 public class userInfo extends javax.swing.JFrame {
 
+    static JLabel name = new javax.swing.JLabel();
+    static JLabel email = new javax.swing.JLabel();
+    static JLabel gender = new javax.swing.JLabel();
+    static JLabel id = new javax.swing.JLabel();
+    
     /**
      * Creates new form userInfo
      */
     public userInfo() {
         initComponents();
+        setLayout(new BorderLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        add(panel, BorderLayout.CENTER);
+        add(name);
+        add(email);
+        add(gender);
+        add(id);
     }
 
     /**
@@ -86,6 +105,15 @@ public class userInfo extends javax.swing.JFrame {
                 new userInfo().setVisible(true);
             }
         });
+    }
+    
+    public static void display(String[] array){
+        
+        id.setText(array[0]);
+        name.setText(array[1]);
+        email.setText(array[2]);
+        gender.setText(array[3]);
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
