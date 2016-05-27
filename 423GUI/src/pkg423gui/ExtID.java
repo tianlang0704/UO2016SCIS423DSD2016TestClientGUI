@@ -17,6 +17,11 @@ import dsd2016.api.DSD2016JAVA;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -25,7 +30,7 @@ import javax.swing.JPanel;
  */
 public class ExtID extends javax.swing.JFrame implements ActionListener{
 
-    static JLabel ext_id = new javax.swing.JLabel();
+    static JTextField ext_id = new javax.swing.JTextField();
     static ArrayList<String> pic_error = new ArrayList<>();
     static StringBuilder outMsg = new StringBuilder();
     static String ID = "";
@@ -42,9 +47,12 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         add(panel, BorderLayout.CENTER);
-        ext_id.setHorizontalAlignment(JLabel.CENTER);
-        ext_id.setVerticalAlignment(JLabel.CENTER);
+        ext_id.setHorizontalAlignment(JTextField.CENTER);
+        ext_id.setEditable(false);
+        ext_id.setBackground(null);
+        ext_id.setBorder(null);
         add(ext_id, BorderLayout.CENTER);
+        
     }
 
     /**
@@ -56,15 +64,15 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        Home = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Home");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Home.setText("Home");
+        Home.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                HomeActionPerformed(evt);
             }
         });
 
@@ -73,27 +81,27 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jButton1)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGap(171, 171, 171)
+                .addComponent(Home)
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(244, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(33, 33, 33))
+                .addContainerGap(248, Short.MAX_VALUE)
+                .addComponent(Home)
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
         
         setVisible(false);
         TestClientLogin l = new TestClientLogin();
         l.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_HomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,19 +139,27 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     }
     
     
-    public static void display(ArrayList<String> array){
+    public static void display(){
         
         String message = new String();
+        String userInfoLoc = "TestClientData/";
+        String userDataName = "userinfo.dat";
+       
+        File f = new File(userInfoLoc + userDataName);
+        Scanner input = null;
+        try {
+            input = new Scanner(f);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ExtID.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String last = "";
+        while (input.hasNextLine())
+        {
+           last = input.nextLine();
+        }
+        input.close();
+        message = last.split(",")[0];
         
-        //System.out.println(array);
-        //System.out.println(array.size());
-        int e_id = DSD2016JAVA.registerNewUser(array,pic_error,outMsg);
-        if (e_id == 1){
-            message = outMsg.toString();
-        }
-        else{
-            message = outMsg.toString();
-        }
         
         ext_id.setText(message);
         
@@ -158,7 +174,7 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Home;
     // End of variables declaration//GEN-END:variables
 
 
