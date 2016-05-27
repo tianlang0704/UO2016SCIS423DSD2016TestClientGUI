@@ -5,10 +5,9 @@
  */
 package pkg423gui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.util.ArrayList;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,41 +17,52 @@ import javax.swing.JPanel;
  *
  * @author Emmalie
  */
-public class userInfo extends javax.swing.JFrame {
+public class userLayout extends javax.swing.JFrame {
 
     static JLabel name = new javax.swing.JLabel();
     static JLabel email = new javax.swing.JLabel();
     static JLabel gender = new javax.swing.JLabel();
     static JLabel id = new javax.swing.JLabel();
+    static JPanel p = new javax.swing.JPanel();
     
     /**
-     * Creates new form userInfo
+     * Creates new form userLayout
      */
-    public userInfo() {
-        
+    public userLayout() {
         initComponents();
+    }
+    
+    public static void addLabels(Container pane){
         
-        JPanel n = new JPanel();
-        JPanel e = new JPanel();
-        JPanel g = new JPanel();
-        JPanel i = new JPanel();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         
-        n.add(name);
-        e.add(email);
-        g.add(gender);
-        i.add(id);
-        //setLayout(new BorderLayout());
-        //JPanel panel = new JPanel();
-        //panel.setLayout(new FlowLayout());
-        //add(panel, BorderLayout.CENTER);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        setVisible(true);
+        addPanel(p, pane);
+
+    }
+    
+    private static void addPanel(JPanel panel, Container cont){
         
-        add(n);
-        add(e);
-        add(g);
-        add(i);
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder("User Information"));
+        cont.add(panel);
+        addALabel(name, panel);
+        addALabel(id, panel);
+        addALabel(email, panel);
+        addALabel(gender, panel);
+        
+    }
+    private static void addALabel(JLabel label, JPanel panel){
+        
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(label);
+    }
+    
+    public static void display(ArrayList<String> array){
+        
+        id.setText(array.get(0));
+        name.setText(array.get(1));
+        email.setText(array.get(2));
+        gender.setText(array.get(3));
+    
     }
 
     /**
@@ -64,27 +74,17 @@ public class userInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("You are logged in");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+            .addGap(0, 412, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jLabel1)
-                .addContainerGap(161, Short.MAX_VALUE))
+            .addGap(0, 314, Short.MAX_VALUE)
         );
 
         pack();
@@ -107,35 +107,24 @@ public class userInfo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(userInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(userInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(userInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(userInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new userInfo().setVisible(true);
+                new userLayout().setVisible(true);
             }
         });
     }
-    
-    public static void display(ArrayList<String> array){
-        
-        id.setText(array.get(0));
-        name.setText(array.get(1));
-        email.setText(array.get(2));
-        gender.setText(array.get(3));
-    
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

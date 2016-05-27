@@ -184,7 +184,9 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
         int valid = rsImgValidateUser(ID, picture, outMsg);
         if(valid == 1){
             setVisible(false);
-            userInfo i = new userInfo();
+            userLayout i = new userLayout();
+            i.addLabels(i.getContentPane());
+            i.pack();
             i.setVisible(true);
             
             ArrayList<String> usr_data = readInfoFromUserDataFile(ID);
