@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +26,7 @@ public class userLayout extends javax.swing.JFrame {
     static JLabel gender = new javax.swing.JLabel();
     static JLabel id = new javax.swing.JLabel();
     static JPanel p = new javax.swing.JPanel();
+    static Box box = Box.createVerticalBox();
     
     /**
      * Creates new form userLayout
@@ -44,8 +46,10 @@ public class userLayout extends javax.swing.JFrame {
     private static void addPanel(JPanel panel, Container cont){
         
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder("User Information"));
+        panel.add(box);
         panel.setPreferredSize(new Dimension(300, 240));
         cont.add(panel);
+        
         addALabel(name, panel);
         addALabel(id, panel);
         addALabel(email, panel);
@@ -55,7 +59,8 @@ public class userLayout extends javax.swing.JFrame {
     private static void addALabel(JLabel label, JPanel panel){
         
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(label);
+        box.add(label);
+        
     }
     
     public static void display(ArrayList<String> array){
