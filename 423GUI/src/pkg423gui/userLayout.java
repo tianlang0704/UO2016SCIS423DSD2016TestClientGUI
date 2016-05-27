@@ -7,6 +7,7 @@ package pkg423gui;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -43,6 +44,7 @@ public class userLayout extends javax.swing.JFrame {
     private static void addPanel(JPanel panel, Container cont){
         
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder("User Information"));
+        panel.setPreferredSize(new Dimension(300, 240));
         cont.add(panel);
         addALabel(name, panel);
         addALabel(id, panel);
