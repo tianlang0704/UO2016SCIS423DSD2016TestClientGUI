@@ -14,13 +14,21 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 
 public class GUIBackend {
     
     private static final String userInfoLoc = "TestClientData/";
     private static final String userDataName = "userinfo.dat";
 	
-    public static int[] registerUser(String name, String email, String gender, ArrayList<BufferedImage> inB64Pics, ArrayList<String> outB64BadPics) throws FileNotFoundException, IOException {
+    public static int[] registerUser(
+            String name, 
+            String email, 
+            String gender, 
+            ArrayList<BufferedImage> inB64Pics, 
+            DSD2016JAVACallBack cb
+    )
+    {
         
         System.out.println("made it to backend");
         System.out.println(name);
@@ -56,71 +64,81 @@ public class GUIBackend {
             return codes;
         }
         
-        StringBuilder outMsg = new StringBuilder();
+        DSD2016JAVA.asyncRsImgRegisterNewUser(
+            inB64Pics, 
+            (int result,
+            ArrayList<String> outB64BadPics,
+            StringBuilder outMsg)->{
+                int[] codes = new int[2];
+                codes[1] = result == DSD2016JAVA.ERRORCODE_LOGIN_FAIL ? GUIConstants.FAILURE
+                        : result == DSD2016JAVA.ERRORCODE_LOGIN_IO_ERROR ? GUIConstants.IO_ERROR
+                        : result == DSD2016JAVA.ERRORCODE_LOGIN_UNKNOWN ? GUIConstants.UNKNOWN_ERROR
+                        : GUIConstants.SUCCESS;
+                codes[0] = codes[1] == GUIConstants.SUCCESS ? GUIConstants.SUCCESS : GUIConstants.FAILURE;
+                if(outB64BadPics.size() > 0) {
+                    for(int i = 0; i < outB64BadPics.size(); i++) {
+                        //remove error codes from pic strings
+                        outB64BadPics.set(i, outB64BadPics.get(i).substring(0, outB64BadPics.get(i).indexOf(',')));
+
+                        //remove bad pics from list of taken pics
+                        if(inB64Pics.contains(outB64BadPics.get(i))) {
+                            inB64Pics.remove(outB64BadPics.get(i));
+                        }
+                    }
+                }
+
+                if(codes[0] == GUIConstants.SUCCESS) {
+
+                    System.out.println("creating dir");
+                    File dir = new File(userInfoLoc);
+                    if(!dir.exists()) {
+                        System.out.println("NEW");
+                        dir.mkdir();
+                        try {
+                            dir.createNewFile();
+                        } catch (IOException ex) {
+                            Logger.getLogger(GUIBackend.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        System.out.println("made dir");
+                    }
+
+                    File f = new File(userInfoLoc + userDataName);
+                    if(!f.exists()) {
+                        System.out.println("create new file");
+                        try {
+                            f.createNewFile();
+                            PrintWriter w = new PrintWriter(f);
+                            w.printf("%s,%s,%s,%s", outMsg.toString(), name, email, gender);
+                            w.flush();
+                            w.close();
+                            w = new PrintWriter(userInfoLoc + "/README.txt");
+                            w.print("The userinfo.dat file represents \"registered\" user data for the Spring 2016 CIS 423 class' Test Client program. Do not alter.");
+                            w.flush();
+                            w.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        try {
+                            PrintWriter w;
+                            w = new PrintWriter(new FileOutputStream(f, true));
+                            w.printf("\n%s,%s,%s,%s", outMsg.toString(), name, email, gender);
+                            w.flush();
+                            w.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                cb.call(result, outB64BadPics, outMsg);
+            }
+        );
+        
         int[] codes = new int[2];
-        int result = DSD2016JAVA.rsImgRegisterNewUser(inB64Pics, outB64BadPics, outMsg);
-        codes[1] = result == DSD2016JAVA.ERRORCODE_REGISTER_FAIL ? GUIConstants.FAILURE
-                : result == DSD2016JAVA.ERRORCODE_REGISTER_IO_ERROR ? GUIConstants.IO_ERROR
-                : result == DSD2016JAVA.ERRORCODE_REGISTER_UNKNOWN ? GUIConstants.UNKNOWN_ERROR
-                : GUIConstants.SUCCESS;
-        codes[0] = codes[1] == GUIConstants.SUCCESS ? GUIConstants.SUCCESS : GUIConstants.FAILURE;
-        
-        if(outB64BadPics.size() > 0) {
-            for(int i = 0; i < outB64BadPics.size(); i++) {
-                //remove error codes from pic strings
-                outB64BadPics.set(i, outB64BadPics.get(i).substring(0, outB64BadPics.get(i).indexOf(',')));
-                
-                //remove bad pics from list of taken pics
-                if(inB64Pics.contains(outB64BadPics.get(i))) {
-                    inB64Pics.remove(outB64BadPics.get(i));
-                }
-            }
-        }
-        
-        if(codes[0] == GUIConstants.SUCCESS) {
-            
-            System.out.println("creating dir");
-            File dir = new File(userInfoLoc);
-            if(!dir.exists()) {
-                System.out.println("NEW");
-                dir.mkdir();
-                dir.createNewFile();
-                System.out.println("made dir");
-            }
-            
-            File f = new File(userInfoLoc + userDataName);
-            if(!f.exists()) {
-                System.out.println("create new file");
-                try {
-                    f.createNewFile();
-                    PrintWriter w = new PrintWriter(f);
-                    w.printf("%s,%s,%s,%s", outMsg.toString(), name, email, gender);
-                    w.flush();
-                    w.close();
-                    w = new PrintWriter(userInfoLoc + "/README.txt");
-                    w.print("The userinfo.dat file represents \"registered\" user data for the Spring 2016 CIS 423 class' Test Client program. Do not alter.");
-                    w.flush();
-                    w.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                try {
-                    PrintWriter w;
-                    w = new PrintWriter(new FileOutputStream(f, true));
-                    w.printf("\n%s,%s,%s,%s", outMsg.toString(), name, email, gender);
-                    w.flush();
-                    w.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            
-        }
-        
-            return codes;
-        
+        codes[0] = codes[1] = GUIConstants.SUCCESS;
+        return codes;
     }
 	
 	public static int[] validateUser(String userID, String inB64Pic, StringBuilder userData) {
@@ -153,5 +171,22 @@ public class GUIBackend {
                 
 		return codes;
 	}
-
+    public static Thread AnimatePanelTitle(JPanel p, String msg){
+        Thread t = new Thread(()->{
+            String dots = new String();
+            for(int i = 0; i < 200; i++){
+                if(i % 30 == 0)
+                    dots = "";
+                dots += ".";
+                p.setBorder(javax.swing.BorderFactory.createTitledBorder(msg + dots));
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GUIBackend.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        t.start();
+        return t;
+    }
 }

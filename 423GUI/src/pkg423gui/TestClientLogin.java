@@ -8,8 +8,7 @@ package pkg423gui;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
-import static dsd2016.api.DSD2016JAVA.rsImgValidateUser;
-import static dsd2016.api.DSD2016JAVA.validateUser;
+import static dsd2016.api.DSD2016JAVA.asyncRsImgValidateUser;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.*;
@@ -23,9 +22,14 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.text.DefaultEditorKit;
+import pkg423guibackend.GUIBackend;
 
 
 /**
@@ -54,6 +58,10 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
      */
     public TestClientLogin() {
         initComponents();
+        InputMap im = (InputMap) UIManager.get("TextField.focusInputMap");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.META_DOWN_MASK), DefaultEditorKit.copyAction);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.META_DOWN_MASK), DefaultEditorKit.pasteAction);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.META_DOWN_MASK), DefaultEditorKit.cutAction);
     }
 
     /**
@@ -178,25 +186,35 @@ public class TestClientLogin extends javax.swing.JFrame implements ActionListene
     }//GEN-LAST:event_SignUpActionPerformed
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        
-        
         ID = new String(user_id.getPassword());
-        int valid = rsImgValidateUser(ID, picture, outMsg);
-        if(valid == 1){
-            setVisible(false);
-            userLayout i = new userLayout();
-            i.addLabels(i.getContentPane());
-            i.pack();
-            i.setVisible(true);
-            
-            ArrayList<String> usr_data = readInfoFromUserDataFile(ID);
-            i.display(usr_data);
-        }
-        else {
-            message = outMsg.toString();
-            System.out.println(message);
-            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(message));
-        }
+        if(picture == null)
+            return;
+        if(ID == null || ID == "")
+            return;
+        
+        final Thread tTitleAnimation = GUIBackend.AnimatePanelTitle(jPanel1, "Logging in");
+        asyncRsImgValidateUser(
+            ID, 
+            picture, 
+            (int valid, ArrayList<String> errors, StringBuilder outMsg)->{
+                tTitleAnimation.stop();
+                if(valid == 1){
+                    setVisible(false);
+                    userLayout i = new userLayout();
+                    i.addLabels(i.getContentPane());
+                    i.pack();
+                    i.setVisible(true);
+
+                    ArrayList<String> usr_data = readInfoFromUserDataFile(ID);
+                    i.display(usr_data);
+                }
+                else {
+                    message = outMsg.toString();
+                    System.out.println(message);
+                    jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(message));
+                }
+            }
+        );
     }//GEN-LAST:event_LoginActionPerformed
 
     private void CameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CameraActionPerformed

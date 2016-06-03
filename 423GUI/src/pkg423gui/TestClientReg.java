@@ -6,29 +6,19 @@
 package pkg423gui;
 
 import pkg423guibackend.GUIBackend;
-import pkg423guibackend.GUIConstants;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -256,7 +246,6 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
     }
     
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
-        
         //String[] usr_info = getInfo();
         //System.out.println(Arrays.toString(usr_info));
         //GUIBackend.registerUser(usr_info[0],usr_info[1],usr_info[2],pictures,pic_error);
@@ -273,20 +262,27 @@ public class TestClientReg extends javax.swing.JFrame implements ActionListener 
             gender = Female.getText();
         System.out.println(gender);
         }
-        try {
-            GUIBackend.registerUser(name,email,gender,pictures,pic_error);
-        } catch (IOException ex) {
-            Logger.getLogger(TestClientReg.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        setVisible(false);
-        s = new ExtID();
-        s.setVisible(true);
         
-        s.display();
+        if(pictures.isEmpty())
+            return;
         
-        
-        
-           
+        final Thread tTitleAnimation = GUIBackend.AnimatePanelTitle(jPanel1, "Registering");
+        GUIBackend.registerUser(
+            name,
+            email,
+            gender,
+            pictures,
+            (int result,
+            ArrayList<String> outB64BadPics,
+            StringBuilder outMsg)->{
+                tTitleAnimation.stop();
+                setVisible(false);
+                s = new ExtID();
+                s.setVisible(true);
+
+                s.display();
+            }
+        );
     }//GEN-LAST:event_SignUpActionPerformed
 
     /**

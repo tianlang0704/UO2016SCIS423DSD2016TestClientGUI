@@ -17,12 +17,17 @@ import dsd2016.api.DSD2016JAVA;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.InputMap;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -42,6 +47,11 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
     public ExtID() {
         initComponents();
         //javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        
+        InputMap im = (InputMap) UIManager.get("TextField.focusInputMap");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.META_DOWN_MASK), DefaultEditorKit.copyAction);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.META_DOWN_MASK), DefaultEditorKit.pasteAction);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.META_DOWN_MASK), DefaultEditorKit.cutAction);
         
         setLayout(new BorderLayout());
         JPanel panel = new JPanel();
@@ -162,9 +172,6 @@ public class ExtID extends javax.swing.JFrame implements ActionListener{
         
         
         ext_id.setText(message);
-        
-        
-        
     }
     
     public String getID(){
